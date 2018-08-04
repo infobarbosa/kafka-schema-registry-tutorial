@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
-public class ClienteDemo {
+public class ClienteAvroProducerDemo {
     public static void main(String[] args) {
 
         Properties properties = new Properties();
