@@ -2,8 +2,9 @@
 version: '3'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:4.1.1
+    image: confluentinc/cp-zookeeper:5.0.0
     hostname: zookeeper
+    container_name: zookeeper
     environment:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -11,20 +12,13 @@ services:
       ZOOKEEPER_INIT_LIMIT: 5
       ZOOKEEPER_SYNC_LIMIT: 2
       ZOOKEEPER_SERVERS: zookeeper:2888:3888
-    networks:
-      laboratorio:
-        ipv4_address: 172.21.0.11
     ports:
       - "2181:2181"
-    extra_hosts:
-      - "moby:127.0.0.1"
 
   kafka:
-    image: confluentinc/cp-enterprise-kafka:4.1.1
+    image: confluentinc/cp-enterprise-kafka:5.0.0
     hostname: kafka
-    networks:
-      laboratorio:
-        ipv4_address: 172.21.0.21
+    container_name: kafka
     depends_on:
       - zookeeper
     ports:
@@ -36,41 +30,36 @@ services:
       KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka:9092
-      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: '172.21.0.11:2181/kafka'
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: "kafka:9092"
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
-    extra_hosts:
-      - "moby:127.0.0.1"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+      KAFKA_JMX_PORT: 9991
 
-  schema-registry:
-    image: confluentinc/cp-schema-registry:4.1.1
-    hostname: schema-registry
-    networks:
-      laboratorio:
-        ipv4_address: 172.21.0.31
+  schemaregistry:
+    image: confluentinc/cp-schema-registry:5.0.0
+    hostname: schemaregistry
+    container_name: schemaregistry
     depends_on:
       - zookeeper
       - kafka
     ports:
       - "8081:8081"
     environment:
-      SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: '172.21.0.11:2181/kafka'
+      SCHEMA_REGISTRY_HOST_NAME: schemaregistry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://kafka:9092'
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 1
 
   control-center:
-    image: confluentinc/cp-enterprise-control-center:4.1.1
+    image: confluentinc/cp-enterprise-control-center:5.0.0
     ports:
       - "9021:9021"
-    networks:
-      laboratorio:
-        ipv4_address: 172.21.0.51
     depends_on:
       - zookeeper
       - kafka
-      - schema-registry
+      - schemaregistry
     environment:
       CONTROL_CENTER_ZOOKEEPER_CONNECT: zookeeper:2181/control-center
       CONTROL_CENTER_BOOTSTRAP_SERVERS: kafka:9092
@@ -78,12 +67,3 @@ services:
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 3
       CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 3
       CONTROL_CENTER_STREAMS_NUM_STREAM_THREADS: 2
-    extra_hosts:
-      - "moby:127.0.0.1"
-
-networks:
-    laboratorio:
-        driver: bridge
-        ipam:
-          config:
-            - subnet: 172.21.0.0/24
