@@ -1,6 +1,5 @@
 package com.github.infobarbosa.kafka.tutorial.schemaregistry;
 
-import com.github.infobarbosa.kafka.tutorial.schemaregistry.Cliente;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
