@@ -5,3 +5,7 @@ kafka-topics \
     --partitions 3 \
     --replication-factor 1
 
+kafka-console-consumer \
+    --bootstrap-server kafka:9092 \
+    --topic cliente \
+    --from-beginning
