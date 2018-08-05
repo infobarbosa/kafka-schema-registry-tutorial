@@ -37,7 +37,7 @@ public class ClienteAvroProducerDemo {
             @Override
             public void onCompletion(RecordMetadata metadata, Exception exception) {
                 if (exception == null) {
-                    System.out.println(metadata);
+                    System.out.println(metadata.partition());
                 } else {
                     exception.printStackTrace();
                 }
