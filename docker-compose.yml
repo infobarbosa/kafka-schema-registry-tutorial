@@ -54,6 +54,8 @@ services:
 
   control-center:
     image: confluentinc/cp-enterprise-control-center:5.0.0
+    hostname: controlcenter
+    container_name: controlcenter
     ports:
       - "9021:9021"
     depends_on:
