@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.infobarbosa</groupId>
-    <artifactId>kafka-producer</artifactId>
+    <artifactId>kafka-avro-producer</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -93,6 +93,7 @@
                         </goals>
                         <configuration>
                             <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
+                            <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
                             <stringType>String</stringType>
                             <createSetters>false</createSetters>
                             <enableDecimalLogicalType>true</enableDecimalLogicalType>
@@ -144,7 +145,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.github.infobarbosa.kafka.ProducerTutorial</mainClass>
+                            <mainClass>com.github.infobarbosa.kafka.AvroProducerTutorial</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -171,7 +172,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>infobarbosa/kafka-producer</repository>
+                    <repository>infobarbosa/kafka-avro-producer</repository>
                     <tag>${project.version}</tag>
                 </configuration>
             </plugin>
