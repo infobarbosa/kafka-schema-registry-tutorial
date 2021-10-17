@@ -1,0 +1,12 @@
+{
+ "type": "record",
+ "namespace": "com.github.infobarbosa.kafka",
+ "name": "Cliente",
+ "version": 1,
+ "fields":[
+    {"name": "id", "type": "string", "doc": "identificacao sistemica do cliente." },
+    {"name": "cpf", "type": "string", "doc": "cpf do cliente"},
+    {"name": "primeiro_nome", "type": "string", "doc": "primeiro nome do cliente"},
+    {"name": "sobrenome", "type": "string", "doc": "sobrenome do cliente"}
+ ]
+}
