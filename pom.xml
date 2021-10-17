@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>kafka-producer</module>
-        <module>kafka-consumer</module>
+        <module>kafka-avro-producer</module>
+        <module>kafka-avro-consumer</module>
     </modules>
 
     <packaging>pom</packaging>
