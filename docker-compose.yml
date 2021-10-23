@@ -41,10 +41,10 @@ services:
     networks:
       - kafkalabs
 
-  schemaregistry:
+  schema-registry:
     image: confluentinc/cp-schema-registry:latest
     hostname: schemaregistry
-    container_name: schemaregistry
+    container_name: schema-registry
     depends_on:
       - zookeeper
       - kafka
@@ -57,31 +57,46 @@ services:
     networks:
       - kafkalabs
 
-  producer1:
+  avro-producer1:
     image: infobarbosa/kafka-avro-producer:1.0-SNAPSHOT
-    container_name: producer1
+    container_name: avro-producer1
     depends_on:
       - zookeeper
       - kafka
-      - schemaregistry
+      - schema-registry
     environment:
       BOOTSTRAP_SERVERS_CONFIG: kafka:9092
       SCHEMA_REGISTRY_URL: 'http://schemaregistry:8081'
     networks:
       - kafkalabs
 
-  consumer1:
+  avro-consumer1:
     image: infobarbosa/kafka-avro-consumer:1.0-SNAPSHOT
-    container_name: consumer1
+    container_name: avro-consumer1
     depends_on:
       - zookeeper
       - kafka
-      - schemaregistry
+      - schema-registry
+      - avro-producer1
     environment:
       BOOTSTRAP_SERVERS_CONFIG: kafka:9092
       SCHEMA_REGISTRY_URL: 'http://schemaregistry:8081'
     networks:
       - kafkalabs      
+
+  proto-producer1:
+    image: infobarbosa/kafka-protobuf-producer:1.0-SNAPSHOT
+    container_name: proto-producer1
+    depends_on:
+      - zookeeper
+      - kafka
+      - schema-registry
+    environment:
+      BOOTSTRAP_SERVERS_CONFIG: kafka:9092
+      SCHEMA_REGISTRY_URL: 'http://schemaregistry:8081'
+    networks:
+      - kafkalabs
+
 networks:
   kafkalabs:
     driver: bridge
