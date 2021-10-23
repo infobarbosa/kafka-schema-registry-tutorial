@@ -1,6 +1,7 @@
 package com.github.infobarbosa.kafka;
 
 import io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializer;
+import io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializerConfig;
 import java.util.Collections;
 import java.util.Properties;
 import org.apache.kafka.clients.consumer.*;
@@ -36,12 +37,14 @@ public class KafkaProtobufConsumerApplication implements CommandLineRunner{
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, "kafka-protobuf-consumer");
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaProtobufDeserializer.class.getName());
-        properties.setProperty("schema.registry.url", SCHEMA_REGISTRY_URL);
+        properties.setProperty(KafkaProtobufDeserializerConfig.SPECIFIC_PROTOBUF_VALUE_TYPE, PagamentoAprovado.class.getName());
+        properties.setProperty(KafkaProtobufDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL);
+        //properties.setProperty("schema.registry.url", SCHEMA_REGISTRY_URL);
         properties.setProperty("specific.avro.reader", "true");
 
         Consumer<String, PagamentoAprovado> pagamentoConsumer = new KafkaConsumer<>(properties);
 
-        String topic = "pagamento-aprovado";
+        String topic = "pagamento-aprovado-protobuf";
         pagamentoConsumer.subscribe(Collections.singleton(topic));
 
         while (true){
