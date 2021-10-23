@@ -1,0 +1,40 @@
+{
+    "name":"Pagamento",
+    "type":"record",
+    "namespace":"com.github.infobarbosa.kafka",
+    "fields":[
+        {
+            "name":"id", 
+            "type":"string", 
+            "logicalType":"uuid", 
+            "doc":"identificação do pagamento"
+        },
+        {
+            "name": "status",
+            "doc":"status do pagamento",
+            "type": ["null", {
+                    "type": "enum",
+                    "name": "Status",
+                    "symbols": ["APROVADO", "RECUSADO", "SOLICITADO"]
+                }
+            ]
+        },
+        {
+            "name":"idPedido", 
+            "type":"string", 
+            "logicalType":"uuid", 
+            "doc":"identificação do pedido a que o pagamento se refere"
+        },
+        {
+            "name":"data", 
+            "type":"long",
+            "logicalType":"timestamp-millis", 
+            "doc":"data/hora do pagamento"
+        },
+        {
+            "name":"valor", 
+            "type": "string", 
+            "doc":"valor do pagamento"
+        }
+    ]
+}
