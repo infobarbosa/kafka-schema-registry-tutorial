@@ -9,4 +9,4 @@ apt-get install default-jre -y
 
 ADD ./target/kafka-protobuf-consumer-1.0-SNAPSHOT.jar kafka-consumer.jar
 
-CMD java -jar kafka-producer.jar
+CMD java -jar kafka-consumer.jar
