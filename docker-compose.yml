@@ -97,6 +97,19 @@ services:
     networks:
       - kafkalabs
 
+  proto-consumer1:
+    image: infobarbosa/kafka-protobuf-consumer:1.0-SNAPSHOT
+    container_name: proto-consumer1
+    depends_on:
+      - zookeeper
+      - kafka
+      - schema-registry
+    environment:
+      BOOTSTRAP_SERVERS_CONFIG: kafka:9092
+      SCHEMA_REGISTRY_URL: 'http://schemaregistry:8081'
+    networks:
+      - kafkalabs
+
 networks:
   kafkalabs:
     driver: bridge
