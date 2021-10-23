@@ -1,0 +1,9 @@
+syntax = "proto3";
+package com.github.infobarbosa.kafka;
+
+message PagamentoAprovado {
+  string id = 1; //Identificação do pagamento em formato uuid. Ex.: 3185c802-a708-4455-9315-dbf095108d64
+  string idPedido = 2; //Identificação do pedido em formato uuid. Ex.: 3185c802-a708-4455-9315-dbf095108d64
+  string data = 3; //A data do pedido no formato dd/MM/yyyy HH:mm:ss. Exemplo: 06/03/2007 13:44:25
+  double valor = 4; //Valor do pagamento 
+}
