@@ -12,6 +12,7 @@
         <module>kafka-avro-producer</module>
         <module>kafka-avro-consumer</module>
         <module>kafka-protobuf-producer</module>
+        <module>kafka-protobuf-consumer</module>
     </modules>
 
     <packaging>pom</packaging>
