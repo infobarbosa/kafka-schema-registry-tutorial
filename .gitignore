@@ -17,5 +17,16 @@ buildNumber.properties
 /*.settings/
 .vscode/
 
+kafka-avro-consumer/.classpath
+kafka-avro-producer/.classpath
+kafka-protobuf-consumer/.classpath
+kafka-protobuf-producer/.classpath
+
+kafka-avro-consumer/.settings
+kafka-avro-producer/.settings
+kafka-protobuf-consumer/.settings
+kafka-protobuf-producer/.settings
+
+
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
